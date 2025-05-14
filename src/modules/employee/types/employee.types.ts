@@ -4,6 +4,6 @@ export interface Employee {
   fullName: string
   occupation: string
   department: string
-  employmentDate: string
+  dateOfEmployment: string
   terminationDate?: string | null
 }

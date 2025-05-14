@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import useEmployeeForm from '@/modules/employee/composables/useEmployeeForm'
 
-import SuccessMessage from '@/components/common/SuccessMessage.vue'
-
-const showSuccess = ref(false)
-
 import {
   ActionBar,
   DateField,
@@ -13,14 +9,13 @@ import {
   SelectField,
   TextField,
 } from '@/modules/employee/components/form'
-import { ref } from 'vue'
 
 const {
   isEditing,
   fullName,
   occupation,
   department,
-  employmentDate,
+  dateOfEmployment,
   terminationDate,
   errors,
   departments,
@@ -41,15 +36,6 @@ const {
       <div class="p-6 space-y-6" @keyup.enter.prevent="submit">
         <SectionCard title="Personal Information">
           <TextField v-model="fullName" label="Full Name" :error="errors.fullName">
-            <template #icon>
-              <svg
-                class="absolute left-3 h-5 w-5 text-gray-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                …
-              </svg>
-            </template>
             <template #asterisk><span class="text-red-500">*</span></template>
           </TextField>
         </SectionCard>
@@ -57,15 +43,6 @@ const {
         <SectionCard title="Professional Information">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <TextField v-model="occupation" label="Occupation" :error="errors.occupation">
-              <template #icon>
-                <svg
-                  class="absolute left-3 h-5 w-5 text-gray-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  …
-                </svg>
-              </template>
               <template #asterisk><span class="text-red-500">*</span></template>
             </TextField>
 
@@ -82,9 +59,9 @@ const {
         <SectionCard title="Dates">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <DateField
-              v-model="employmentDate"
+              v-model="dateOfEmployment"
               label="Employment Date"
-              :error="errors.employmentDate"
+              :error="errors.dateOfEmployment"
             >
               <template #asterisk><span class="text-red-500">*</span></template>
             </DateField>
@@ -93,17 +70,8 @@ const {
           </div>
         </SectionCard>
 
-        <ActionBar :isEditing="isEditing" @submit="submit">
-          <template #icon>
-            <svg class="h-5 w-5 mr-1.5" viewBox="0 0 20 20" fill="currentColor">…</svg>
-          </template>
-        </ActionBar>
+        <ActionBar :isEditing="isEditing" @submit="submit"> </ActionBar>
       </div>
     </div>
   </div>
-  <SuccessMessage
-    v-if="showSuccess"
-    :message="'Employee created successfully!'"
-    :show="showSuccess"
-  />
 </template>

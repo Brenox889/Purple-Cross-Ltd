@@ -1,5 +1,5 @@
 import { ref, watch, onMounted, computed } from 'vue'
-import type { Employee } from '../types/employee.types'
+import type { SortableColumn, Employee } from '../types'
 
 export default function useEmployeeTable(
   store: ReturnType<typeof import('@/store/employees').useEmployeeStore>,
@@ -11,7 +11,7 @@ export default function useEmployeeTable(
 
   // Sorting configuration
   const sortColumn = ref<
-    'fullName' | 'occupation' | 'department' | 'employmentDate' | 'terminationDate'
+    'fullName' | 'occupation' | 'department' | 'dateOfEmployment' | 'terminationDate'
   >('fullName')
   const sortDirection = ref<'asc' | 'desc'>('asc')
 
@@ -58,7 +58,7 @@ export default function useEmployeeTable(
   })
 
   // Toggles sort direction or sets new column to sort by
-  function toggleSort(column: typeof sortColumn.value) {
+  function toggleSort(column: SortableColumn) {
     if (sortColumn.value === column) {
       sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
     } else {
