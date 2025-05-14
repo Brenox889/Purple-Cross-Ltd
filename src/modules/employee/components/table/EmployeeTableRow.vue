@@ -36,10 +36,10 @@ defineEmits<{
       </span>
     </td>
     <td class="px-6 py-4 whitespace-nowrap">
-      <div class="text-gray-900">{{ formatDate(employee.employmentDate) }}</div>
+      <div class="text-gray-900">{{ formatDate(employee.dateOfEmployment) }}</div>
       <div class="text-xs mt-1" v-if="!employee.terminationDate">
-        <span :class="getEmploymentStatusClass(employee.employmentDate)">
-          {{ getEmploymentStatus(employee.employmentDate) }}
+        <span :class="getEmploymentStatusClass(employee.dateOfEmployment)">
+          {{ getEmploymentStatus(employee.dateOfEmployment) }}
         </span>
       </div>
     </td>
@@ -57,24 +57,44 @@ defineEmits<{
       <div class="flex space-x-2 justify-end">
         <RouterLink
           :to="`/employees/${employee.id}`"
-          class="text-purple-600 hover:text-purple-900 bg-purple-50 hover:bg-purple-100 p-1.5 rounded-md transition-colors"
+          class="flex items-center gap-x-1.5 text-purple-600 hover:text-purple-900 bg-purple-50 hover:bg-purple-100 p-1.5 rounded-md transition-colors"
           title="View Profile"
         >
-          <IconComponent :src="ViewIcon" size="5" alt="View details" />
+          <IconComponent
+            :src="ViewIcon"
+            alt="View details"
+            size="5"
+            class="sm:w-5 sm:h-5 w-6 h-6"
+          />
+          View
         </RouterLink>
+
         <RouterLink
           :to="`/employees/${employee.id}/edit`"
-          class="text-purple-600 hover:text-purple-900 bg-purple-50 hover:bg-purple-100 p-1.5 rounded-md transition-colors"
+          class="flex items-center gap-x-1.5 text-purple-600 hover:text-purple-900 bg-purple-50 hover:bg-purple-100 p-1.5 rounded-md transition-colors"
           title="Edit employee"
         >
-          <IconComponent :src="EditIcon" size="5" alt="Edit employee" />
+          <IconComponent
+            :src="EditIcon"
+            alt="Edit employee"
+            size="5"
+            class="sm:w-5 sm:h-5 w-6 h-6"
+          />
+          Edit
         </RouterLink>
+
         <button
           @click="$emit('delete', employee)"
-          class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-1.5 rounded-md transition-colors"
+          class="flex items-center gap-x-1.5 text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 p-1.5 rounded-md transition-colors"
           title="Delete employee"
         >
-          <IconComponent :src="DeleteIcon" size="5" alt="Delete employee" />
+          <IconComponent
+            :src="DeleteIcon"
+            alt="Delete employee"
+            size="5"
+            class="sm:w-5 sm:h-5 w-6 h-6"
+          />
+          Delete
         </button>
       </div>
     </td>

@@ -1,13 +1,16 @@
 <script setup lang="ts">
 defineProps<{
   label: string
-  column: 'fullName' | 'occupation' | 'department' | 'employmentDate' | 'terminationDate'
+  column: 'fullName' | 'occupation' | 'department' | 'dateOfEmployment' | 'terminationDate'
   sortColumn: string
   sortDirection: 'asc' | 'desc'
 }>()
 
 defineEmits<{
-  (e: 'sort', column: string): void
+  (
+    e: 'sort',
+    column: 'fullName' | 'occupation' | 'department' | 'dateOfEmployment' | 'terminationDate',
+  ): void
 }>()
 </script>
 

@@ -6,7 +6,6 @@ import { EmployeeTableHeader, EmployeeTableRow, EmployeeTableEmpty } from '.'
 
 import EmployeeFilters from '@/modules/employee/components/EmployeeFilters.vue'
 import EmployeePagination from '@/modules/employee/components/EmployeePagination.vue'
-import EmployeeDetailsDialog from '@/modules/employee/components/EmployeeDetailsDialog.vue'
 import DeleteDialog from '@/modules/employee/components/DeleteDialog.vue'
 
 import type { Employee } from '../../types/employee.types'
@@ -49,7 +48,7 @@ const columns = [
   { key: 'fullName', label: 'Full Name' },
   { key: 'occupation', label: 'Occupation' },
   { key: 'department', label: 'Department' },
-  { key: 'employmentDate', label: 'Employment Date' },
+  { key: 'dateOfEmployment', label: 'Employment Date' },
   { key: 'terminationDate', label: 'Termination Date' },
 ] as const
 </script>
@@ -63,8 +62,8 @@ const columns = [
     />
 
     <!-- Table Actions -->
-    <div class="flex flex-wrap items-center justify-end mb-4">
-      <div class="flex items-center space-x-3">
+    <div class="flex flex-wrap justify-center sm:justify-end mb-4">
+      <div class="flex items-center gap-3">
         <input ref="fileInput" type="file" accept=".csv" class="hidden" @change="importCSV" />
 
         <button
@@ -85,45 +84,48 @@ const columns = [
 
     <!-- Table -->
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-purple-50">
-          <tr>
-            <EmployeeTableHeader
-              v-for="col in columns"
-              :key="col.key"
-              :label="col.label"
-              :column="col.key"
-              :sort-column="sortColumn"
-              :sort-direction="sortDirection"
-              @sort="toggleSort"
+      <!-- Wrapper com scroll horizontal apenas no mobile -->
+      <div class="overflow-x-auto sm:overflow-x-visible w-full">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-purple-50">
+            <tr>
+              <EmployeeTableHeader
+                v-for="col in columns"
+                :key="col.key"
+                :label="col.label"
+                :column="col.key"
+                :sort-column="sortColumn"
+                :sort-direction="sortDirection"
+                @sort="toggleSort"
+              />
+              <th
+                class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-purple-700"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+
+          <tbody v-if="isLoading" class="divide-y divide-gray-200">
+            <tr v-for="n in 5" :key="n" class="animate-pulse">
+              <td v-for="i in 6" :key="i" class="px-6 py-4">
+                <div class="h-4 bg-gray-200 rounded w-full"></div>
+              </td>
+            </tr>
+          </tbody>
+
+          <tbody v-else class="bg-white divide-y divide-gray-200">
+            <EmployeeTableRow
+              v-for="emp in rows"
+              :key="emp.id"
+              :employee="emp"
+              @view="viewEmployee"
+              @delete="confirmDelete"
             />
-            <th
-              class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-purple-700"
-            >
-              Actions
-            </th>
-          </tr>
-        </thead>
-
-        <tbody v-if="isLoading" class="divide-y divide-gray-200">
-          <tr v-for="n in 5" :key="n" class="animate-pulse">
-            <td v-for="i in 6" :key="i" class="px-6 py-4">
-              <div class="h-4 bg-gray-200 rounded w-full"></div>
-            </td>
-          </tr>
-        </tbody>
-
-        <tbody v-else class="bg-white divide-y divide-gray-200">
-          <EmployeeTableRow
-            v-for="emp in rows"
-            :key="emp.id"
-            :employee="emp"
-            @view="viewEmployee"
-            @delete="confirmDelete"
-          />
-          <EmployeeTableEmpty v-if="rows.length === 0" />
-        </tbody>
-      </table>
+            <EmployeeTableEmpty v-if="rows.length === 0" />
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Pagination -->
@@ -132,27 +134,14 @@ const columns = [
     </div>
 
     <!-- Create Button -->
-    <div class="flex justify-end mt-6">
+    <div class="flex justify-center sm:justify-end mt-6">
       <RouterLink
         to="/employees/new"
         class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-md font-medium flex items-center gap-2 transition-colors shadow-sm"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-            clip-rule="evenodd"
-          />
-        </svg>
         Create Employee
       </RouterLink>
     </div>
-
     <!-- Modals -->
     <EmployeeDetailsDialog
       :open="showDetails"
