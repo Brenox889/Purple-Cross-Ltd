@@ -72,7 +72,6 @@ export async function fetchEmployees(
 // Mocked add function (in-memory only)
 export function addEmployee(e: Employee) {
   db.unshift(e)
-  alert('aaaa')
 }
 
 // Mocked update function
