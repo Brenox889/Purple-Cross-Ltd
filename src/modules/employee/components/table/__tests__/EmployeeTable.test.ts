@@ -22,7 +22,7 @@ describe('EmployeeTable.vue', () => {
         fullName: 'Jane Doe',
         occupation: 'Engineer',
         department: 'Tech',
-        employmentDate: '2021-01-01',
+        dateOfEmployment: '2021-01-01',
         terminationDate: null,
       },
     ]

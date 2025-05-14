@@ -10,7 +10,7 @@ const base: Employee = {
   fullName: 'Alice Johnson',
   occupation: 'Analyst',
   department: 'Finance',
-  employmentDate: '2021-06-14', // any ISO string; test derives display via helper
+  dateOfEmployment: '2021-06-14', // any ISO string; test derives display via helper
   terminationDate: null,
 }
 
@@ -21,7 +21,7 @@ describe('EmployeeTableRow.vue', () => {
     expect(wrapper.text()).toContain(base.fullName)
     expect(wrapper.text()).toContain(base.occupation)
     expect(wrapper.text()).toContain(base.department)
-    expect(wrapper.text()).toContain(formatDate(base.employmentDate))
+    expect(wrapper.text()).toContain(formatDate(base.dateOfEmployment))
   })
 
   it('emits "delete" on delete button click', async () => {
