@@ -42,7 +42,6 @@ It was designed to showcase best‑practice Vue 3 in a real‑world CRUD scenar
 | State | **Pinia** | Type‑safe store modules; simple devtools integration |
 | Routing | **Vue Router 4** | Code‑splitting & route guards |
 | Tests | **Vitest + Vue Test Utils** | Jest‑compatible API, fast in‑memory DOM |
-| Icons | Inline SVGs via `IconComponent` | Tree‑shakeable & accessible |
 
 ---
 
@@ -72,8 +71,7 @@ pnpm test  # vitest --coverage
 | `build` | Production build (≈ 15 kB gzip) |
 | `preview` | Serve dist build locally |
 | `lint` | ESLint + Prettier check |
-| `test` | Unit tests with coverage report |
-| `type-check` | Vue TSC strict mode |
+| `test:coverage` | Unit tests with coverage report |
 
 ---
 
@@ -105,7 +103,7 @@ src/
 ## Author & Contact
 **Breno Mendes** — Senior Front‑End Engineer (React & Vue)  
 🌍 Brazil (UTC‑3) · willing to relocate / work remote in **Malta**  
-[LinkedIn](https://www.linkedin.com/in/brenomendes) • breno.dev@gmail.com
+[LinkedIn](https://www.linkedin.com/in/breno-mendes) • brenommartins889@gmail.com
 
 > *Looking for a passionate FE dev who delivers clean code, tests & great UX?  
 > Let’s chat — I’m ready to build amazing products with your team in Malta!*
