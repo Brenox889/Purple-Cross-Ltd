@@ -8,20 +8,10 @@ const router = useRouter()
 <template>
   <div class="bg-white px-6 py-4 border-b flex justify-between items-center">
     <div class="flex items-center space-x-2">
-      <button class="text-gray-600 hover:text-purple-600" @click="router.push('/employees')">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6 6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-          />
-        </svg>
-      </button>
+      <button
+        class="text-gray-600 hover:text-purple-600"
+        @click="router.push('/employees')"
+      ></button>
       <h1 class="text-xl font-bold text-gray-800">
         {{ isEdit ? 'Edit Employee' : 'Employee Profile' }}
       </h1>
