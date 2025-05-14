@@ -15,7 +15,7 @@ export default function useCsvHandlers(
       emp.fullName,
       emp.occupation,
       emp.department,
-      emp.employmentDate,
+      emp.dateOfEmployment,
       emp.terminationDate ?? '',
     ])
 
@@ -43,11 +43,12 @@ export default function useCsvHandlers(
     reader.onload = () => {
       const text = reader.result as string
       const lines = text.trim().split('\n')
-      const [header, ...rows] = lines
+      const [...rows] = lines
 
       // Convert each line to an employee object
       const employees = rows.map((line, i) => {
-        const [fullName, occupation, department, employmentDate, terminationDate] = line.split(',')
+        const [fullName, occupation, department, dateOfEmployment, terminationDate] =
+          line.split(',')
 
         return {
           id: Date.now() + i, // Generate a unique ID based on timestamp
@@ -55,7 +56,7 @@ export default function useCsvHandlers(
           fullName,
           occupation,
           department,
-          employmentDate,
+          dateOfEmployment,
           terminationDate: terminationDate || null,
         }
       })

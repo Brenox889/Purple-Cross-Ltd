@@ -3,6 +3,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmployeeStore } from '@/store/employees'
 import type { Employee } from '@/modules/employee/types/employee.types'
+import { useShowResponseMessage } from '@/composables/useShowResponseMessage'
 
 export default function useEmployeeProfile() {
   /* ─────────────────────────── routing & store ─────────────────────────── */
@@ -21,7 +22,7 @@ export default function useEmployeeProfile() {
     fullName: '',
     occupation: '',
     department: '',
-    employmentDate: '',
+    dateOfEmployment: '',
     terminationDate: '',
   })
 
@@ -38,6 +39,7 @@ export default function useEmployeeProfile() {
       : '??',
   )
 
+  const { showError, showSuccess } = useShowResponseMessage()
   // Active status badge (no termination date)
   const isActive = computed(() => !form.value.terminationDate)
 
@@ -63,8 +65,20 @@ export default function useEmployeeProfile() {
   /** Persist edited form back to store and leave edit mode. */
   function save() {
     if (!employee.value) return
-    store.update({ ...form.value, id: employee.value.id, code: employee.value.code })
-    router.push(`/employees/${employee.value.id}`)
+
+    try {
+      store.update({
+        ...form.value,
+        id: employee.value.id,
+        code: employee.value.code,
+      })
+
+      showSuccess('Employee updated successfully!')
+      router.push(`/employees/${employee.value.id}`)
+    } catch (err) {
+      showError('Failed to update employee. Please try again.')
+      console.error(err)
+    }
   }
 
   /* ─────────────────────────── lifecycle hooks ─────────────────────────── */

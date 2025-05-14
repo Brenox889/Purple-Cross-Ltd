@@ -2,6 +2,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmployeeStore } from '@/store/employees'
 import type { Employee } from '@/modules/employee/types/employee.types'
+import { useShowResponseMessage } from '@/composables/useShowResponseMessage'
 
 export default function useEmployeeForm() {
   const store = useEmployeeStore()
@@ -14,7 +15,7 @@ export default function useEmployeeForm() {
   const fullName = ref('')
   const occupation = ref('')
   const department = ref('')
-  const employmentDate = ref('')
+  const dateOfEmployment = ref('')
   const terminationDate = ref('')
   const errors = ref<Record<string, string>>({})
 
@@ -30,6 +31,8 @@ export default function useEmployeeForm() {
     'Legal',
   ] as const
 
+  const { showSuccess, showError } = useShowResponseMessage()
+
   /* hydrate when editing */
   onMounted(() => {
     if (!isEditing.value) return
@@ -38,7 +41,7 @@ export default function useEmployeeForm() {
       fullName.value = emp.fullName
       occupation.value = emp.occupation
       department.value = emp.department
-      employmentDate.value = emp.employmentDate
+      dateOfEmployment.value = emp.dateOfEmployment
       terminationDate.value = emp.terminationDate ?? ''
     }
   })
@@ -49,7 +52,7 @@ export default function useEmployeeForm() {
     if (!fullName.value.trim()) e.fullName = 'Full name is required'
     if (!occupation.value.trim()) e.occupation = 'Occupation is required'
     if (!department.value) e.department = 'Department is required'
-    if (!employmentDate.value) e.employmentDate = 'Employment date is required'
+    if (!dateOfEmployment.value) e.dateOfEmployment = 'Employment date is required'
     errors.value = e
     return Object.keys(e).length === 0
   }
@@ -62,15 +65,23 @@ export default function useEmployeeForm() {
       fullName: fullName.value,
       occupation: occupation.value,
       department: department.value,
-      employmentDate: employmentDate.value,
+      dateOfEmployment: dateOfEmployment.value,
       terminationDate: terminationDate.value || null,
     }
-    if (isEditing.value) {
-      store.update(emp)
-    } else {
-      store.add(emp)
+    try {
+      if (isEditing.value) {
+        store.update(emp)
+        showSuccess('Employee updated successfully!')
+      } else {
+        store.add(emp)
+        showSuccess('Employee created successfully!')
+      }
+
+      router.push('/')
+    } catch (err) {
+      showError('Something went wrong. Please try again.')
+      console.error(err)
     }
-    router.push('/')
   }
 
   return {
@@ -79,7 +90,7 @@ export default function useEmployeeForm() {
     fullName,
     occupation,
     department,
-    employmentDate,
+    dateOfEmployment,
     terminationDate,
     errors,
     departments,

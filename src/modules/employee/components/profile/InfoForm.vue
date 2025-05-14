@@ -4,7 +4,7 @@ defineProps<{
     fullName: string
     occupation: string
     department: string
-    employmentDate: string
+    dateOfEmployment: string
     terminationDate?: string | null
   }
   isEdit: boolean
@@ -83,11 +83,11 @@ defineEmits(['update:form'])
           <label class="block text-sm font-medium text-gray-700 mb-1">Employment Date</label>
           <input
             type="date"
-            :value="form.employmentDate"
+            :value="form.dateOfEmployment"
             @input="
               $emit('update:form', {
                 ...form,
-                employmentDate: ($event.target as HTMLInputElement).value,
+                dateOfEmployment: ($event.target as HTMLInputElement).value,
               })
             "
             :disabled="!isEdit"
