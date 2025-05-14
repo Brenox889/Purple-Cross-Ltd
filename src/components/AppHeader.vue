@@ -1,26 +1,3 @@
-<!-- <template>
-  <header class="bg-white shadow">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex">
-          <div class="flex-shrink-0 flex items-center">
-            <h1 class="text-xl font-bold text-purple-700">Purple Cross Ltd</h1>
-          </div>
-          <nav class="ml-6 flex space-x-8">
-            <a
-              href="#"
-              class="inline-flex items-center px-1 pt-1 border-b-2 border-purple-500 text-sm font-medium text-gray-900"
-            >
-              Funcionários
-            </a>
-          </nav>
-        </div>
-      </div>
-    </div>
-  </header>
-</template>
- -->
-
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 
@@ -34,9 +11,7 @@ const links = [
 
 const isActive = (path: string) => route.path === path
 
-// Corrigindo o bug de navegação dupla
 const navigate = (path: string) => {
-  // Só navega se não estiver já na rota atual
   if (route.path !== path) {
     router.push(path)
   }
@@ -44,37 +19,72 @@ const navigate = (path: string) => {
 </script>
 
 <template>
-  <header class="bg-white shadow-md border-b border-gray-100">
-    <div class="mx-auto flex items-center justify-between px-6 py-4 max-w-7xl">
-      <div class="flex items-center space-x-4">
-        <div class="flex items-center">
-          <!-- Ícone simples como logo -->
-          <!-- <div class="w-8 h-8 rounded-md bg-purple-600 flex items-center justify-center">
-            <span class="text-white font-bold">Purple Cross Ltd</span>
-          </div> -->
-          <!-- Título -->
-          <h1 class="ml-3 text-xl font-semibold text-purple-800">Purple Cross Ltd</h1>
+  <header class="bg-white shadow-md border-b border-gray-200 sticky top-0 z-30">
+    <div class="w-full flex flex-wrap justify-between items-center px-4 sm:px-6 lg:px-8 py-3">
+      <!-- Logo e título -->
+      <div class="flex items-center">
+        <div
+          class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-purple-700 to-purple-500 flex items-center justify-center shadow-sm"
+        >
+          <span class="text-white font-bold text-sm sm:text-lg">PC</span>
         </div>
+        <h1 class="ml-2 sm:ml-3 text-lg sm:text-xl font-bold text-gray-800 truncate">
+          <span class="text-purple-700">Purple</span>
+          <span class="hidden xs:inline">Cross Ltd</span>
+        </h1>
       </div>
-      <nav class="flex space-x-6">
+
+      <!-- Navegação -->
+      <div class="flex items-center mt-0">
         <button
           v-for="link in links"
           :key="link.path"
           @click="navigate(link.path)"
-          class="text-sm font-medium py-2 px-3 rounded-md transition-colors duration-200 relative group"
+          class="text-xs sm:text-sm font-medium py-1.5 sm:py-2 px-2 sm:px-4 rounded-md transition-colors duration-200 ml-1 sm:ml-2"
           :class="
             isActive(link.path)
-              ? 'text-white bg-purple-600 shadow-sm'
-              : 'text-gray-600 hover:text-purple-700 hover:bg-purple-50'
+              ? 'text-white bg-gradient-to-r from-purple-700 to-purple-600 shadow-sm'
+              : 'text-gray-700 hover:text-purple-700 hover:bg-purple-50'
           "
         >
-          {{ link.name }}
-          <span
-            v-if="!isActive(link.path)"
-            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-purple-600 group-hover:w-full group-hover:left-0 transition-all duration-300 ease-in-out"
-          ></span>
+          <span v-if="link.name === 'Employees'" class="hidden xxs:inline">Employees</span>
+          <span v-else-if="link.name === 'Add new Employee'" class="hidden xxs:inline"
+            >Add new Employee</span
+          >
+          <span v-if="link.name === 'Employees'" class="xxs:hidden">Emp.</span>
+          <span v-else-if="link.name === 'Add new Employee'" class="xxs:hidden">Add</span>
         </button>
-      </nav>
+      </div>
     </div>
   </header>
 </template>
+
+<style scoped>
+/* Breakpoints to small screens */
+@media (min-width: 360px) {
+  .xxs\:inline {
+    display: inline;
+  }
+  .xxs\:hidden {
+    display: none;
+  }
+}
+@media (max-width: 359px) {
+  .xxs\:inline {
+    display: none;
+  }
+  .xxs\:hidden {
+    display: inline;
+  }
+}
+@media (min-width: 480px) {
+  .xs\:inline {
+    display: inline;
+  }
+}
+@media (max-width: 479px) {
+  .hidden.xs\:inline {
+    display: none;
+  }
+}
+</style>
