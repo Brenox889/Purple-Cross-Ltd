@@ -1,7 +1,7 @@
 # Purple Cross — Employee Management Dashboard
 
 > **Vue 3 ∙ Vite ∙ TypeScript ∙ Tailwind CSS ∙ Pinia ∙ Vitest**  
-> Built with ❤️ by **Breno Mendes** — ready for production & ready for Malta 🇲🇹
+> Built with ❤️ by **Breno Mendes** 
 
 ---
 
@@ -102,11 +102,7 @@ src/
 
 ## Author & Contact
 **Breno Mendes** — Senior Front‑End Engineer (React & Vue)  
-🌍 Brazil (UTC‑3) · willing to relocate / work remote in **Malta**  
 [LinkedIn](https://www.linkedin.com/in/breno-mendes) • brenommartins889@gmail.com
-
-> *Looking for a passionate FE dev who delivers clean code, tests & great UX?  
-> Let’s chat — I’m ready to build amazing products with your team in Malta!*
 
 ---
 
